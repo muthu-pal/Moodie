@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+:root {
+  --primary: #1db954;
+  --white: #ffffff;
+  --black: #191414;
+}
+
+.btn {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400px;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+}
+
+.btn--primary--solid {
+  background-color: var(--primary);
+  color: var(--white);
+  border: 2px solid var(--primary);
+}
+
+.btn--primary--outline {
+  background-color: transparent;
+  border: 2px solid var(--white);
+  color: var(--white);
+}
+
+.btn--medium {
+  padding: 15px 30px;
+  font-size: 28px;
+}
+.btn--small {
+  padding: 15px 30px;
+  font-size: 24px;
+}

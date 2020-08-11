@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Component } from "react";
+import "./App.css";
+import { MyButton } from "./components/Button.jsx";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Playlist from './components/Playlist.js';
+import SongRows from './components/SongRows.js';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+//import  MyDropdown  from "./myDropdown.js";
+
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <h1 className="Title" style={{align: 'right'}}>Clockwise</h1>
+        <MyButton className="ButtonMonthYear"
+          onClick={() => {
+            console.log("button==clicked");
+          }}
+          type="button"
+          buttonStyle="btn--primary--outline"
+          buttonSize="btn--small"
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          month
+        </MyButton>
+        <MyButton className="ButtonMonthYear"
+          onClick={() => {
+            console.log("button==clicked");
+          }}
+          type="button"
+          buttonStyle="btn--primary--solid"
+          buttonSize="btn--small"
+        >
+          year
+        </MyButton>
+
+        <SongRows />
+      </div>
+    );
+  }
 }
 
 export default App;
