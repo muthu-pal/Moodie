@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Component } from "react";
 import "./App.css";
-import { MyButton } from "./components/Button.jsx";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Playlist from './components/Playlist.js';
 import SongRows from './components/SongRows.js';
+import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import MonthDropdowns from "./components/MonthDropdown";
+import YearDropdowns from "./components/YearDropdown";
+import ViewDropdowns from "./components/ViewDropdowns";
+import SongArtistDropdown from "./components/SongArtistDropdown";
 
 //import  MyDropdown  from "./myDropdown.js";
 
@@ -45,6 +49,7 @@ class App extends Component {
     )
   }
 
+
   render() {
     return (
       <div className="App">
@@ -52,26 +57,20 @@ class App extends Component {
         {this.state.serverData.user ?
         <div>
           <h3>welcome {this.state.serverData.user.name}</h3>
-          <MyButton className="ButtonMonthYear"
-            onClick={() => {
-              console.log("button==clicked");
-            }}
-            type="button"
-            buttonStyle="btn--primary--outline"
-            buttonSize="btn--small"
-          >
-            month
-          </MyButton>
-          <MyButton className="ButtonMonthYear"
-            onClick={() => {
-              console.log("button==clicked");
-            }}
-            type="button"
-            buttonStyle="btn--primary--solid"
-            buttonSize="btn--small"
-          >
-            year
-          </MyButton>
+          <Container>
+            <Row>
+              <Col>
+                <SongArtistDropdown />
+              </Col>
+              <Col>
+                <MonthDropdowns />
+                <YearDropdowns />
+              </Col>
+              <Col>
+                <ViewDropdowns />
+              </Col>
+          </Row>
+          </Container>
 
           <SongRows />
         </div> : <h1 style={{color: '#1DB954', textAlign: "center"}}>fetching your music...</h1>}
