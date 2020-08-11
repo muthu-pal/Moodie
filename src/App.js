@@ -49,29 +49,33 @@ class App extends Component {
     return (
       <div className="App">
         <h1 className="Title" style={{align: 'right'}}>Clockwise</h1>
-        {this.state.serverData.user && <h3>welcome {this.state.serverData.user.name}</h3>}
-        <MyButton className="ButtonMonthYear"
-          onClick={() => {
-            console.log("button==clicked");
-          }}
-          type="button"
-          buttonStyle="btn--primary--outline"
-          buttonSize="btn--small"
-        >
-          month
-        </MyButton>
-        <MyButton className="ButtonMonthYear"
-          onClick={() => {
-            console.log("button==clicked");
-          }}
-          type="button"
-          buttonStyle="btn--primary--solid"
-          buttonSize="btn--small"
-        >
-          year
-        </MyButton>
+        {this.state.serverData.user ?
+        <div>
+          <h3>welcome {this.state.serverData.user.name}</h3>
+          <MyButton className="ButtonMonthYear"
+            onClick={() => {
+              console.log("button==clicked");
+            }}
+            type="button"
+            buttonStyle="btn--primary--outline"
+            buttonSize="btn--small"
+          >
+            month
+          </MyButton>
+          <MyButton className="ButtonMonthYear"
+            onClick={() => {
+              console.log("button==clicked");
+            }}
+            type="button"
+            buttonStyle="btn--primary--solid"
+            buttonSize="btn--small"
+          >
+            year
+          </MyButton>
 
-        <SongRows />
+          <SongRows />
+        </div> : <h1 style={{color: '#1DB954', textAlign: "center"}}>fetching your music...</h1>}
+
       </div>
     );
   }
