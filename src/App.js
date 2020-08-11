@@ -10,12 +10,46 @@ import SongRows from './components/SongRows.js';
 
 //import  MyDropdown  from "./myDropdown.js";
 
+let fakeServerData = {
+  user: {
+    name: "harry",
+    topSongs: [
+      {
+        songName: "Adore You",
+        songArtist: "harry styles"
+      },
+      {
+        songName: "I feel good",
+        songArtist: "laundry day"
+      },
+      {
+        songName: "blueberry faygo",
+        songArtist: "lil mosey"
+      }
+    ]
+  }
+}
+
 
 class App extends Component {
+  constructor(){
+    super();
+    this.state={serverData: {}}
+  }
+  
+  componentDidMount(){
+    setTimeout( ()=> {
+    this.setState({
+      serverData: fakeServerData
+    })}, 2000
+    )
+  }
+
   render() {
     return (
       <div className="App">
         <h1 className="Title" style={{align: 'right'}}>Clockwise</h1>
+        {this.state.serverData.user && <h3>welcome {this.state.serverData.user.name}</h3>}
         <MyButton className="ButtonMonthYear"
           onClick={() => {
             console.log("button==clicked");
