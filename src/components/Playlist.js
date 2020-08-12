@@ -1,10 +1,12 @@
 import React from 'react';
+import { Component } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import './Playlist.css'
 
-function Playlist() {
+class Playlist extends Component {
+  render(){
     
       return (
         <div style={{ color: "white" }}>
@@ -16,10 +18,10 @@ function Playlist() {
               </Col>
               <Col>
                 <Row>
-                  <h3 style={{ textAlign: "left" }}>Adore You</h3>
+                  <h3 style={{ textAlign: "left" }}>{this.props.name}</h3>
                 </Row>
                 <Row>
-                  <ul style={{ textAlign: "left" }}>Harry Styles</ul>
+                  <ul style={{ textAlign: "left" }}>{this.props.artist}</ul>
                 </Row>
               </Col>
             </Row>
@@ -27,5 +29,7 @@ function Playlist() {
         </div>
       );
   }
+}
+
 
   export default Playlist

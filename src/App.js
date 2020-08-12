@@ -5,8 +5,8 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Playlist from './components/Playlist.js';
-import SongRows from './components/SongRows.js';
-import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+// import SongRows from './components/SongRows.js';
+// import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import MonthDropdowns from "./components/MonthDropdown";
 import YearDropdowns from "./components/YearDropdown";
 import ViewDropdowns from "./components/ViewDropdowns";
@@ -72,7 +72,13 @@ class App extends Component {
           </Row>
           </Container>
 
-          <SongRows />
+
+          {
+            this.state.serverData.user.topSongs.map(topSongs => 
+              <Playlist name={topSongs.songName} artist={topSongs.songArtist} song={topSongs}/>)
+
+          }
+          {/* <SongRows /> */}
         </div> : <h1 style={{color: '#1DB954', textAlign: "center"}}>fetching your music...</h1>}
 
       </div>
