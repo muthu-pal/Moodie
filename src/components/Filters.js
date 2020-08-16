@@ -16,176 +16,107 @@ let fakeServerData = {
         name: "Adore You",
         songArtist: "harry styles",
         month: "July",
-        year: "2020"
+        Mood: "High Energy"
       },
       {
         name: "I feel good",
         songArtist: "laundry day",
         month: "February",
-        year: "2018"
+        Mood: "High Energy"
       },
       {
         name: "blueberry faygo",
         songArtist: "lil mosey",
         month: "February",
-        year: "2019"
+        Mood: "Danceable"
       },
       {
         name: "blueberry faygo",
         songArtist: "lil mosey",
         month: "January",
-        year: "2019"
+        Mood: "Acoustic"
       },
       {
         name: "mean it",
         songArtist: "lauv",
         month: "July",
-        year: "2020"
+        Mood: "Poppy"
       },
       {
         name: "mean it",
         songArtist: "lauv",
         month: "July",
-        year: "2020"
+        Mood: "Chill"
       },
       {
         name: "mean it",
         songArtist: "lauv",
         month: "July",
-        year: "2020"
+        Mood: "Instrumental"
       }
-    ],
-    topArtists: [
-      { name: "Harry Styles", month: "July", year: "2020" },
-      { name: "Khalid" },
-      { name: "Taylor Swift" },
-      { name: "Joji" },
-      { name: "LANY" }
     ]
   }
 };
 
 const FiltersDrop = (props) => {
-  const [dropdownOpenSongArtist, setOpenSongArtist] = useState(false);
-  const [songArtist, setSongArtist] = useState("Song");
-
-  const [dropdownOpenMonth, setOpenMonth] = useState(false);
-  const [month, setMonth] = useState("January");
-
-  const [dropdownOpenYear, setOpenYear] = useState(false);
-  const [year, setYear] = useState("2020");
+  const [dropdownOpenMood, setOpenMood] = useState(false);
+  const [Mood, setMood] = useState("");
 
   const [dropdownOpenView, setOpenView] = useState(false);
   const [viewNum, setView] = useState(1);
+
   const [filteredStuff, setFilteredStuff] = useState([]);
 
-  const toggleSA = () => {
-    setOpenSongArtist(!dropdownOpenSongArtist);
-  };
-  const toggleM = () => {
-    setOpenMonth(!dropdownOpenMonth);
-  };
-  const toggleY = () => {
-    setOpenYear(!dropdownOpenYear);
+  const toggleMood = () => {
+    setOpenMood(!dropdownOpenMood);
   };
   const toggleV = () => {
     setOpenView(!dropdownOpenView);
   };
 
-  function clickedSong() {
-    setSongArtist("Song");
-    //setFiltArray(fakeServerData.user.topSongs.map((user) => user.name));
-  }
-
-  function clickedArtist() {
-    setSongArtist("Artist");
-    //setFiltArray(fakeServerData.user.topArtists.map((user) => user.name));
-  }
-
   useEffect(() => {
     setFilteredStuff(
-      songArtist === "Song"
-        ? fakeServerData.user.topSongs
-            .filter((e) => e.month === month)
-            .filter((e) => e.year === year)
-            .slice(0, viewNum)
-        : fakeServerData.user.topArtists
-            .filter((e) => e.month === month)
-            .filter((e) => e.year === year)
-            .slice(0, viewNum)
+      fakeServerData.user.topSongs
+        .filter((e) => e.Mood === Mood)
+        .slice(0, viewNum)
     );
-  }, [songArtist, month, year, viewNum]);
+  }, [Mood, viewNum]);
 
-  //console.log(filteredStuff);
-
-  function clickedJan() {
-    setMonth("January");
+  function clickedHighEnergy() {
+    setMood("High Energy");
   }
-  function clickedFeb() {
-    setMonth("February");
+  function clickedDanceable() {
+    setMood("Danceable");
   }
-  function clickedMarch() {
-    setMonth("March");
+  function clickedInstrumental() {
+    setMood("Instrumental");
   }
-  function clickedApril() {
-    setMonth("April");
+  function clickedAcoustic() {
+    setMood("Acoustic");
   }
-  function clickedMay() {
-    setMonth("May");
+  function clickedLive() {
+    setMood("Live");
   }
-  function clickedJune() {
-    setMonth("June");
+  function clickedSpeechy() {
+    setMood("Speechy");
   }
-  function clickedJuly() {
-    setMonth("July");
+  function clickedChill() {
+    setMood("Chill");
   }
-  function clickedAug() {
-    setMonth("August");
+  function clickedHappy() {
+    setMood("Happy");
   }
-  function clickedSept() {
-    setMonth("September");
+  function clickedSad() {
+    setMood("Sad");
   }
-  function clickedOct() {
-    setMonth("October");
+  function clickedPoppy() {
+    setMood("Poppy");
   }
-  function clickedNov() {
-    setMonth("November");
+  function clickedIndie() {
+    setMood("Indie");
   }
-  function clickedDec() {
-    setMonth("Dec");
-  }
-  function clicked2020() {
-    setYear("2020");
-  }
-  function clicked2019() {
-    setYear("2019");
-  }
-  function clicked2018() {
-    setYear("2018");
-  }
-  function clicked2017() {
-    setYear("2017");
-  }
-  function clicked2016() {
-    setYear("2016");
-  }
-  function clicked2015() {
-    setYear("2015");
-  }
-  function clicked2014() {
-    setYear("2014");
-  }
-  function clicked2013() {
-    setYear("2013");
-  }
-  function clicked2012() {
-    setYear("2012");
-  }
-  function clicked2011() {
-    setYear("2011");
-  }
-  function clicked2010() {
-    setYear("2010");
+  function clickedElectronic() {
+    setMood("Electronic");
   }
 
   function clicked10() {
@@ -202,31 +133,9 @@ const FiltersDrop = (props) => {
     <div>
       <div>
         <ButtonDropdown
-          isOpen={dropdownOpenSongArtist}
-          toggle={toggleSA}
-          className="songArtist--Btn"
-        >
-          <DropdownToggle
-            caret
-            style={{
-              backgroundColor: "transparent",
-              borderColor: "white",
-              color: "white",
-              borderRadius: "20px"
-            }}
-          >
-            {songArtist}
-          </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem onClick={clickedSong}>Song</DropdownItem>
-            <DropdownItem onClick={clickedArtist}>Artist</DropdownItem>
-          </DropdownMenu>
-        </ButtonDropdown>
-
-        <ButtonDropdown
-          isOpen={dropdownOpenMonth}
-          toggle={toggleM}
-          className="month--Btn"
+          isOpen={dropdownOpenMood}
+          toggle={toggleMood}
+          className="Mood--Btn"
         >
           <DropdownToggle
             caret
@@ -237,52 +146,23 @@ const FiltersDrop = (props) => {
               borderRadius: "20px"
             }}
           >
-            {month}
+            Mood: {Mood}
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem onClick={clickedJan}>January</DropdownItem>
-            <DropdownItem onClick={clickedFeb}>February</DropdownItem>
-            <DropdownItem onClick={clickedMarch}>March</DropdownItem>
-            <DropdownItem onClick={clickedApril}>April</DropdownItem>
-            <DropdownItem onClick={clickedMay}>May</DropdownItem>
-            <DropdownItem onClick={clickedJune}>June</DropdownItem>
-            <DropdownItem onClick={clickedJuly}>July</DropdownItem>
-            <DropdownItem onClick={clickedAug}>August</DropdownItem>
-            <DropdownItem onClick={clickedSept}>September</DropdownItem>
-            <DropdownItem onClick={clickedOct}>October</DropdownItem>
-            <DropdownItem onClick={clickedNov}>November</DropdownItem>
-            <DropdownItem onClick={clickedDec}>December</DropdownItem>
-          </DropdownMenu>
-        </ButtonDropdown>
-
-        <ButtonDropdown
-          isOpen={dropdownOpenYear}
-          toggle={toggleY}
-          className="Year--Btn"
-        >
-          <DropdownToggle
-            caret
-            style={{
-              backgroundColor: "#1DB954",
-              borderColor: "white",
-              color: "white",
-              borderRadius: "20px"
-            }}
-          >
-            {year}
-          </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem onClick={clicked2020}>2020</DropdownItem>
-            <DropdownItem onClick={clicked2019}>2019</DropdownItem>
-            <DropdownItem onClick={clicked2018}>2018</DropdownItem>
-            <DropdownItem onClick={clicked2017}>2017</DropdownItem>
-            <DropdownItem onClick={clicked2016}>2016</DropdownItem>
-            <DropdownItem onClick={clicked2015}>2015</DropdownItem>
-            <DropdownItem onClick={clicked2014}>2014</DropdownItem>
-            <DropdownItem onClick={clicked2013}>2013</DropdownItem>
-            <DropdownItem onClick={clicked2012}>2012</DropdownItem>
-            <DropdownItem onClick={clicked2011}>2011</DropdownItem>
-            <DropdownItem onClick={clicked2010}>2010</DropdownItem>
+            <DropdownItem onClick={clickedHighEnergy}>High Energy</DropdownItem>
+            <DropdownItem onClick={clickedDanceable}>Danceable</DropdownItem>
+            <DropdownItem onClick={clickedInstrumental}>
+              Instrumental
+            </DropdownItem>
+            <DropdownItem onClick={clickedAcoustic}>Acoustic</DropdownItem>
+            <DropdownItem onClick={clickedLive}>Live</DropdownItem>
+            <DropdownItem onClick={clickedSpeechy}>Speechy</DropdownItem>
+            <DropdownItem onClick={clickedChill}>Chill</DropdownItem>
+            <DropdownItem onClick={clickedHappy}>Happy</DropdownItem>
+            <DropdownItem onClick={clickedSad}>Sad</DropdownItem>
+            <DropdownItem onClick={clickedPoppy}>Poppy</DropdownItem>
+            <DropdownItem onClick={clickedIndie}>Indie</DropdownItem>
+            <DropdownItem onClick={clickedElectronic}>Electronic</DropdownItem>
           </DropdownMenu>
         </ButtonDropdown>
 
