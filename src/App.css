@@ -1,23 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap");
 
 .App {
-  
   background: black;
+  font-family: "Inter", sans-serif;
 }
 body {
   background-color: black;
 }
-img{
+img {
   height: 62px;
   width: 62px;
-};
-
-.Title{
-  font-family: "Roboto", sans-serif;
-  font-weight: 1000px;
-  text-align: right;
 }
-.ButtonMonthYear{
-  position: center;
+
+.Title {
+  /* font-family: "Roboto", sans-serif; */
+  font-family: "Inter", sans-serif;
+  font-weight: 1000px;
+  text-align: left;
+  color: white;
 }
