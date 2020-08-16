@@ -3,10 +3,13 @@ import {
   ButtonDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Button
 } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Playlist from "./Playlist.js";
+import queryString from "query-string";
+
 
 let fakeServerData = {
   user: {
@@ -17,48 +20,30 @@ let fakeServerData = {
         songArtist: "harry styles",
         month: "July",
         Mood: "High Energy"
-      },
-      {
-        name: "I feel good",
-        songArtist: "laundry day",
-        month: "February",
-        Mood: "High Energy"
-      },
-      {
-        name: "blueberry faygo",
-        songArtist: "lil mosey",
-        month: "February",
-        Mood: "Danceable"
-      },
-      {
-        name: "blueberry faygo",
-        songArtist: "lil mosey",
-        month: "January",
-        Mood: "Acoustic"
-      },
-      {
-        name: "mean it",
-        songArtist: "lauv",
-        month: "July",
-        Mood: "Poppy"
-      },
-      {
-        name: "mean it",
-        songArtist: "lauv",
-        month: "July",
-        Mood: "Chill"
-      },
-      {
-        name: "mean it",
-        songArtist: "lauv",
-        month: "July",
-        Mood: "Instrumental"
       }
     ]
   }
 };
 
 const FiltersDrop = (props) => {
+  const [loggedInQuery, setLoggedInQuery] = useState("");
+
+  function logIn(){
+    const parsed = queryString.parse(window.location.search);
+    console.log(parsed);
+    setLoggedInQuery(parsed.access_token);
+    fetch('https://api.spotify.com/v1/me', 
+    {headers: {'Authorization': 'Bearer ' + parsed.access_token}
+    }).then((response) => 
+      response.json()
+    ).then((data) => console.log(data))
+  }
+
+  console.log(loggedInQuery)
+
+
+
+
   const [dropdownOpenMood, setOpenMood] = useState(false);
   const [Mood, setMood] = useState("");
 
@@ -131,6 +116,8 @@ const FiltersDrop = (props) => {
 
   return (
     <div>
+
+    {(loggedInQuery !== "") ? 
       <div>
         <ButtonDropdown
           isOpen={dropdownOpenMood}
@@ -188,9 +175,10 @@ const FiltersDrop = (props) => {
             <DropdownItem onClick={clicked50}>3</DropdownItem>
           </DropdownMenu>
         </ButtonDropdown>
-      </div>
+     
       <br />
       <br />
+    
       {filteredStuff.map((element) => {
         return (
           <>
@@ -203,6 +191,13 @@ const FiltersDrop = (props) => {
           </>
         );
       })}
+      </div>
+      
+      
+      : 
+      (<div><h1>please sign in <Button onClick={logIn}>here</Button></h1></div>)}
+      
+
     </div>
   );
 };
