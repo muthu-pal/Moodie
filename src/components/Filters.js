@@ -34,13 +34,12 @@ const FiltersDrop = (props) => {
     let access_token = parsed.access_token;
     console.log(parsed);
     setLoggedInQuery(access_token);
-    if (parsed.grant_type === "authorization_code"){
     fetch('https://api.spotify.com/v1/me', 
     {headers: {'Authorization': 'Bearer ' + access_token}
     }).then((response) => 
       response.json()
     ).then((data) => console.log(data))
-  }}
+  }
 
   console.log(loggedInQuery)
 
@@ -119,6 +118,7 @@ const FiltersDrop = (props) => {
 
   return (
     <div>
+      {(loggedInQuery !== "") ?
               <div>
                 <ButtonDropdown
                   isOpen={dropdownOpenMood}
