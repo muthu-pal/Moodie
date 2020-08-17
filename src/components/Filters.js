@@ -9,6 +9,7 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import Playlist from "./Playlist.js";
 import queryString from "query-string";
+import { format } from "util";
 
 
 // let fakeServerData = {
@@ -27,38 +28,103 @@ import queryString from "query-string";
 
 const FiltersDrop = (props) => {
   const [loggedInQuery, setLoggedInQuery] = useState("");
-  const [serverData, setServerData] = useState({});
+  
   let topSongsArr = [];
+  const [serverData, setServerData] = useState(
+     {
+       user: ""
+     });
+     const [serverDataTopSongsLT, setServerDataTopSongsLT] = useState([]);
+     const [serverDataTopSongsMT, setServerDataTopSongsMT] = useState([]);
+     const [serverDataTopSongsST, setServerDataTopSongsST] = useState([]);
 
+     const [serverDataTracksLT, setServerDataTracksLT] = useState([]);
+     const [serverDataTracksMT, setServerDataTracksMT] = useState([]);
+     const [serverDataTracksST, setServerDataTracksST] = useState([]);
+
+    //  const [tracksInfoLT, setTracksInfoLT] = useState({
+    //    id: "",
+    //    acousticness: 0.0,
+    //    danceability: 0.0,
+    //    energy: 0.0,
+    //    instrumentalness: 0.0,
+    //    liveness: 0.0,
+    //    loudness: 0.0,
+    //    speechiness: 0.0,
+    //    valence: 0.0,
+    //    tempo: 0.0
+
+
+
+    //  });
 
   
 
   function logIn(){
     const parsed = queryString.parse(window.location.search);
     let access_token = parsed.access_token;
-    console.log(parsed);
+    //console.log(parsed);
     setLoggedInQuery(access_token);
-    // fetch('https://api.spotify.com/v1/me', 
-    // {headers: {'Authorization': 'Bearer ' + access_token}
-    // }).then((response) => 
-    //   response.json()
-    // ).then((data) => setServerData({user: {name: data.display_name}}))
-
-    fetch('https://api.spotify.com/v1/me/top/tracks', 
+    if (!access_token){
+      console.log("err")
+      return;
+    }
+    fetch('https://api.spotify.com/v1/me', 
     {headers: {'Authorization': 'Bearer ' + access_token}
     }).then((response) => 
       response.json()
-    ).then((data) => setServerData({user: {topSongs: data.items}}))
+     ).then((data) => (setServerData({...serverData, user: data.display_name})))
+    
 
-    for (var i = 0; i < user.topSongs.data.items.length; i++ ){
-      topSongsArr.push({name:user.topSongs.data.items[i].name, artist:user.topSongs.data.items[i].album.artists[0].name, albumImg:user.topSongs.data.items[i].album.images[2]})
-    }
+    fetch('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=long_term', 
+    {headers: {'Authorization': 'Bearer ' + access_token}
+    }).then((response) => response.json())
+      .then((data) => setServerDataTopSongsLT(data.items.map(item => item.id)))
+
+      fetch('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=medium_term', 
+    {headers: {'Authorization': 'Bearer ' + access_token}
+    }).then((response) => response.json())
+      .then((data) => setServerDataTopSongsMT(data.items.map(item => item.id)))
+
+      fetch('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=short_term', 
+    {headers: {'Authorization': 'Bearer ' + access_token}
+    }).then((response) => response.json())
+      .then((data) => setServerDataTopSongsST(data.items.map(item => item.id)))
+
+      // fetch(`https://api.spotify.com/v1/audio-features?ids=${serverDataTracksLT}`, 
+      //   {headers: {'Authorization': 'Bearer ' + access_token}
+      //   }).then((response) => response.json())
+      //   .then((data) => (data.audio_features.map(item => setTracksInfoLT({
+      //     ...tracksInfoLT,
+      //     id: item.id,
+      //     acousticness: item.acousticness,
+      //     danceability: item.danceability,
+      //     energy: item.energy,
+      //     instrumentalness: item.instrumentalness,
+      //     liveness: item.liveness,
+      //     loudness: item.loudness,
+      //     speechiness: item.speechiness,
+      //     valence: item.valence,
+      //     tempo: item.tempo
+      //   }))))
+      
+      
+        
+
+
+
+     
 
 
     
   }
 
   console.log(loggedInQuery)
+  console.log(serverData)
+  console.log(serverDataTopSongsST)
+  console.log(serverDataTopSongsMT)
+  // console.log(serverDataTracksLT)
+  
 
   
 
@@ -136,6 +202,8 @@ const FiltersDrop = (props) => {
   return (
     <div>
       {(loggedInQuery !== "") ?
+      (serverData !== "") && 
+        <div>
               <div>
                 <ButtonDropdown
                   isOpen={dropdownOpenMood}
@@ -201,16 +269,21 @@ const FiltersDrop = (props) => {
                 return (
                   <>
                     <Playlist
-                      name={element.name}
-                      artist={element.artist}
-                      photo={element.albumImg}
-                      photoAlt="Album Cover"
+                      name={serverData}
+                      //   element.name}
+                      // artist={element.artist}
+                      // photo={element.albumImg}
+                      // photoAlt="Album Cover"
                     />
                   </>
                 );
               })}
         </div>
       
+      </div>
+      // : <h1>could not connect</h1>
+      
+
       : 
       (<div><h1>please sign in <Button onClick={logIn}>here</Button></h1></div>)}
       
