@@ -28,12 +28,13 @@ import { format } from "util";
 
 const FiltersDrop = (props) => {
   const [loggedInQuery, setLoggedInQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   
-  let topSongsArr = [];
-  const [serverData, setServerData] = useState(
-     {
-       user: ""
-     });
+      let topSongsArr = [];
+      const [serverData, setServerData] = useState(
+        {
+          user: ""
+        });
      const [serverDataTopSongsLT, setServerDataTopSongsLT] = useState([]);
      const [serverDataTopSongsMT, setServerDataTopSongsMT] = useState([]);
      const [serverDataTopSongsST, setServerDataTopSongsST] = useState([]);
@@ -42,8 +43,8 @@ const FiltersDrop = (props) => {
      const [serverDataTracksMT, setServerDataTracksMT] = useState([]);
      const [serverDataTracksST, setServerDataTracksST] = useState([]);
 
-    //  const [tracksInfoLT, setTracksInfoLT] = useState({
-    //    id: "",
+     const [tracksInfoLT, setTracksInfoLT] = useState({
+       id: ""
     //    acousticness: 0.0,
     //    danceability: 0.0,
     //    energy: 0.0,
@@ -56,7 +57,8 @@ const FiltersDrop = (props) => {
 
 
 
-    //  });
+      });
+
 
   
 
@@ -69,61 +71,92 @@ const FiltersDrop = (props) => {
       console.log("err")
       return;
     }
+
+    
     fetch('https://api.spotify.com/v1/me', 
     {headers: {'Authorization': 'Bearer ' + access_token}
     }).then((response) => 
       response.json()
      ).then((data) => (setServerData({...serverData, user: data.display_name})))
+     .catch(error => console.log(error))
     
 
     fetch('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=long_term', 
     {headers: {'Authorization': 'Bearer ' + access_token}
     }).then((response) => response.json())
       .then((data) => setServerDataTopSongsLT(data.items.map(item => item.id)))
+      .catch(error => console.log(error))
 
       fetch('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=medium_term', 
     {headers: {'Authorization': 'Bearer ' + access_token}
     }).then((response) => response.json())
       .then((data) => setServerDataTopSongsMT(data.items.map(item => item.id)))
+      .catch(error => console.log(error))
 
       fetch('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=short_term', 
     {headers: {'Authorization': 'Bearer ' + access_token}
     }).then((response) => response.json())
       .then((data) => setServerDataTopSongsST(data.items.map(item => item.id)))
-
-      // fetch(`https://api.spotify.com/v1/audio-features?ids=${serverDataTracksLT}`, 
-      //   {headers: {'Authorization': 'Bearer ' + access_token}
-      //   }).then((response) => response.json())
-      //   .then((data) => (data.audio_features.map(item => setTracksInfoLT({
-      //     ...tracksInfoLT,
-      //     id: item.id,
-      //     acousticness: item.acousticness,
-      //     danceability: item.danceability,
-      //     energy: item.energy,
-      //     instrumentalness: item.instrumentalness,
-      //     liveness: item.liveness,
-      //     loudness: item.loudness,
-      //     speechiness: item.speechiness,
-      //     valence: item.valence,
-      //     tempo: item.tempo
-      //   }))))
+      .catch(error => console.log(error)) 
       
-      
-        
+  }
+        console.log(serverDataTopSongsST)
+        console.log(serverDataTopSongsMT)
+        console.log(serverDataTopSongsLT)  
 
 
+function filterData(arrID){
+    console.log(arrID);
+    let arrLink = "";
+    arrLink = arrID.reduce((total, init) => (total + ","+ init) , "");
+    fetch(`https://api.spotify.com/v1/audio-features?ids=${arrLink}`, 
+        {headers: {'Authorization': 'Bearer ' + loggedInQuery}
+        }).then((response) => response.json())
+        .then((data) => ((data && data.audio_features && data.audio_features.map(item => (item.id && setTracksInfoLT({
+          ...tracksInfoLT,
+          id: item.id,
+          acousticness: item.acousticness,
+          danceability: item.danceability,
+          energy: item.energy,
+          instrumentalness: item.instrumentalness,
+          liveness: item.liveness,
+          loudness: item.loudness,
+          speechiness: item.speechiness,
+          valence: item.valence,
+          tempo: item.tempo
+         }))))))
+          .catch(error => console.log(error))
+        }
 
+
+function pressSubmit(filteredStuff){
+  topSongsArr = filteredStuff.map((element) => {
+    return (
+      <>
+        <Playlist
+          name={serverData}
+          //   element.name}
+          // artist={element.artist}
+          // photo={element.albumImg}
+          // photoAlt="Album Cover"
+        />
+      </>
+    );
+  })
+
+}
      
 
 
     
-  }
+  
 
   console.log(loggedInQuery)
   console.log(serverData)
   console.log(serverDataTopSongsST)
   console.log(serverDataTopSongsMT)
-  // console.log(serverDataTracksLT)
+  console.log(serverDataTopSongsLT)
+   console.log(serverDataTracksLT)
   
 
   
@@ -264,8 +297,9 @@ const FiltersDrop = (props) => {
             
               <br />
               <br />
+              {/* <Button onClick={filterData(serverDataTracksLT)}>submit</Button> */}
             
-              {filteredStuff.map((element) => {
+              {/* {filteredStuff.map((element) => {
                 return (
                   <>
                     <Playlist
@@ -277,11 +311,11 @@ const FiltersDrop = (props) => {
                     />
                   </>
                 );
-              })}
+              })} */}
         </div>
       
       </div>
-      // : <h1>could not connect</h1>
+      
       
 
       : 
