@@ -33,34 +33,32 @@ const FiltersDrop = (props) => {
       let topSongsArr = [];
       const [serverData, setServerData] = useState(
         {
-          user: ""
+          user: "",
         });
      const [serverDataTopSongsLT, setServerDataTopSongsLT] = useState([]);
      const [serverDataTopSongsMT, setServerDataTopSongsMT] = useState([]);
      const [serverDataTopSongsST, setServerDataTopSongsST] = useState([]);
 
-     const [serverDataTracksLT, setServerDataTracksLT] = useState([]);
-     const [serverDataTracksMT, setServerDataTracksMT] = useState([]);
-     const [serverDataTracksST, setServerDataTracksST] = useState([]);
 
-     const [tracksInfoLT, setTracksInfoLT] = useState({
-       id: ""
-    //    acousticness: 0.0,
-    //    danceability: 0.0,
-    //    energy: 0.0,
-    //    instrumentalness: 0.0,
-    //    liveness: 0.0,
-    //    loudness: 0.0,
-    //    speechiness: 0.0,
-    //    valence: 0.0,
-    //    tempo: 0.0
-
-
-
-      });
+     const [tracksInfoLT, setTracksInfoLT] = useState([
+       {
+       id: "",
+       name: "",
+       artist: "",
+       acousticness: 0.0,
+       danceability: 0.0,
+       energy: 0.0,
+       instrumentalness: 0.0,
+       liveness: 0.0,
+       loudness: 0.0,
+       speechiness: 0.0,
+       valence: 0.0,
+       tempo: 0.0
+      }
+    ]);
 
 
-  
+  //LOG IN 
 
   function logIn(){
     const parsed = queryString.parse(window.location.search);
@@ -71,10 +69,12 @@ const FiltersDrop = (props) => {
       console.log("err")
       return;
     }
+  }
 
-    
+//GET TRACK IDS IN ARRAY
+  useEffect(() => {
     fetch('https://api.spotify.com/v1/me', 
-    {headers: {'Authorization': 'Bearer ' + access_token}
+    {headers: {'Authorization': 'Bearer ' + loggedInQuery}
     }).then((response) => 
       response.json()
      ).then((data) => (setServerData({...serverData, user: data.display_name})))
@@ -82,83 +82,66 @@ const FiltersDrop = (props) => {
     
 
     fetch('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=long_term', 
-    {headers: {'Authorization': 'Bearer ' + access_token}
+    {headers: {'Authorization': 'Bearer ' + loggedInQuery}
     }).then((response) => response.json())
       .then((data) => setServerDataTopSongsLT(data.items.map(item => item.id)))
       .catch(error => console.log(error))
 
       fetch('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=medium_term', 
-    {headers: {'Authorization': 'Bearer ' + access_token}
+    {headers: {'Authorization': 'Bearer ' + loggedInQuery}
     }).then((response) => response.json())
       .then((data) => setServerDataTopSongsMT(data.items.map(item => item.id)))
       .catch(error => console.log(error))
 
       fetch('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=short_term', 
-    {headers: {'Authorization': 'Bearer ' + access_token}
+    {headers: {'Authorization': 'Bearer ' + loggedInQuery}
     }).then((response) => response.json())
       .then((data) => setServerDataTopSongsST(data.items.map(item => item.id)))
       .catch(error => console.log(error)) 
-      
-  }
+    
+  }, [loggedInQuery]);
+
+
+
         console.log(serverDataTopSongsST)
         console.log(serverDataTopSongsMT)
         console.log(serverDataTopSongsLT)  
 
 
-function filterData(arrID){
-    console.log(arrID);
-    let arrLink = "";
-    arrLink = arrID.reduce((total, init) => (total + ","+ init) , "");
-    fetch(`https://api.spotify.com/v1/audio-features?ids=${arrLink}`, 
+
+useEffect(() => {
+  //longterm 
+  let arrLink = serverDataTopSongsLT.reduce((total, init) => (total + ","+ init) , "");
+  arrLink = arrLink.slice(1,);
+  console.log(arrLink)
+  fetch(`https://api.spotify.com/v1/audio-features?ids=${arrLink}`, 
         {headers: {'Authorization': 'Bearer ' + loggedInQuery}
         }).then((response) => response.json())
-        .then((data) => ((data && data.audio_features && data.audio_features.map(item => (item.id && setTracksInfoLT({
-          ...tracksInfoLT,
-          id: item.id,
-          acousticness: item.acousticness,
-          danceability: item.danceability,
-          energy: item.energy,
-          instrumentalness: item.instrumentalness,
-          liveness: item.liveness,
-          loudness: item.loudness,
-          speechiness: item.speechiness,
-          valence: item.valence,
-          tempo: item.tempo
-         }))))))
-          .catch(error => console.log(error))
-        }
+        .then((data) => ((data && data.audio_features && data.audio_features.map(item => (item.id && setTracksInfoLT(
+                    tracksInfoLT.push({
+                    id: item.id,
+                    // acousticness: item.acousticness,
+                    // danceability: item.danceability,
+                    // energy: item.energy,
+                    // instrumentalness: item.instrumentalness,
+                    // liveness: item.liveness,
+                    // loudness: item.loudness,
+                    // speechiness: item.speechiness,
+                    // valence: item.valence,
+                    // tempo: item.tempo
+                    })))
+                   ))))
+                    .catch(error => console.log(error))
 
-
-function pressSubmit(filteredStuff){
-  topSongsArr = filteredStuff.map((element) => {
-    return (
-      <>
-        <Playlist
-          name={serverData}
-          //   element.name}
-          // artist={element.artist}
-          // photo={element.albumImg}
-          // photoAlt="Album Cover"
-        />
-      </>
-    );
-  })
-
-}
+    
      
+    
+  }, [serverData, serverDataTopSongsLT, serverDataTopSongsMT, serverDataTopSongsST, loggedInQuery ]);    
+  console.log(tracksInfoLT);    
+
 
 
     
-  
-
-  console.log(loggedInQuery)
-  console.log(serverData)
-  console.log(serverDataTopSongsST)
-  console.log(serverDataTopSongsMT)
-  console.log(serverDataTopSongsLT)
-   console.log(serverDataTracksLT)
-  
-
   
 
 
@@ -299,11 +282,11 @@ function pressSubmit(filteredStuff){
               <br />
               {/* <Button onClick={filterData(serverDataTracksLT)}>submit</Button> */}
             
-              {/* {filteredStuff.map((element) => {
+              {filteredStuff.map((element) => {
                 return (
                   <>
                     <Playlist
-                      name={serverData}
+                      // name={serverData}
                       //   element.name}
                       // artist={element.artist}
                       // photo={element.albumImg}
@@ -311,7 +294,7 @@ function pressSubmit(filteredStuff){
                     />
                   </>
                 );
-              })} */}
+              })}
         </div>
       
       </div>
