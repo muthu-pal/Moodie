@@ -11,22 +11,26 @@ import Playlist from "./Playlist.js";
 import queryString from "query-string";
 
 
-let fakeServerData = {
-  user: {
-    name: "harry",
-    topSongs: [
-      {
-        name: "Adore You",
-        songArtist: "harry styles",
-        month: "July",
-        Mood: "High Energy"
-      }
-    ]
-  }
-};
+// let fakeServerData = {
+//   user: {
+//     name: "harry",
+//     topSongs: [
+//       {
+//         name: "Adore You",
+//         songArtist: "harry styles",
+//         month: "July",
+//         Mood: "High Energy"
+//       }
+//     ]
+//   }
+// };
 
 const FiltersDrop = (props) => {
   const [loggedInQuery, setLoggedInQuery] = useState("");
+  const [serverData, setServerData] = useState({});
+  let topSongsArr = [];
+
+
   
 
   function logIn(){
@@ -34,11 +38,24 @@ const FiltersDrop = (props) => {
     let access_token = parsed.access_token;
     console.log(parsed);
     setLoggedInQuery(access_token);
-    fetch('https://api.spotify.com/v1/me', 
+    // fetch('https://api.spotify.com/v1/me', 
+    // {headers: {'Authorization': 'Bearer ' + access_token}
+    // }).then((response) => 
+    //   response.json()
+    // ).then((data) => setServerData({user: {name: data.display_name}}))
+
+    fetch('https://api.spotify.com/v1/me/top/tracks', 
     {headers: {'Authorization': 'Bearer ' + access_token}
     }).then((response) => 
       response.json()
-    ).then((data) => console.log(data))
+    ).then((data) => setServerData({user: {topSongs: data.items}}))
+
+    for (var i = 0; i < user.topSongs.data.items.length; i++ ){
+      topSongsArr.push({name:user.topSongs.data.items[i].name, artist:user.topSongs.data.items[i].album.artists[0].name, albumImg:user.topSongs.data.items[i].album.images[2]})
+    }
+
+
+    
   }
 
   console.log(loggedInQuery)
@@ -63,8 +80,8 @@ const FiltersDrop = (props) => {
 
   useEffect(() => {
     setFilteredStuff(
-      fakeServerData.user.topSongs
-        .filter((e) => e.Mood === Mood)
+      topSongsArr
+        //.filter((e) => e.Mood === Mood)
         .slice(0, viewNum)
     );
   }, [Mood, viewNum]);
@@ -185,9 +202,9 @@ const FiltersDrop = (props) => {
                   <>
                     <Playlist
                       name={element.name}
-                      artist={element.songArtist}
-                      photo={"/images/Harry-Styles.jpg"}
-                      photoAlt="Harry"
+                      artist={element.artist}
+                      photo={element.albumImg}
+                      photoAlt="Album Cover"
                     />
                   </>
                 );
