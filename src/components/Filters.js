@@ -21,12 +21,19 @@ const FiltersDrop = (props) => {
     });
 
   //states for ids
+  //track ids for user's top songs
   const [serverDataTopSongsLT, setServerDataTopSongsLT] = useState([]);
   const [serverDataTopSongsMT, setServerDataTopSongsMT] = useState([]);
   const [serverDataTopSongsST, setServerDataTopSongsST] = useState([]);
 
 
+  //track info like id, acousticness, tempo, etc
   const [tracksInfoLT, setTracksInfoLT] = useState([]);
+  const [tracksInfoMT, setTracksInfoMT] = useState([]);
+  const [tracksInfoST, setTracksInfoST] = useState([]);
+
+
+  const [filteredIDArr, setFilteredIDArr] = useState([]);
   const [topSongsArr, setTopSongsArr] = useState([]);
 
 
@@ -77,9 +84,9 @@ const FiltersDrop = (props) => {
 
 
 
-
+//LONGTERM DATA: track info
 useEffect(() => {
-  //longterm 
+  
   let arrLink = serverDataTopSongsLT.reduce((total, init) => (total + ","+ init) , "");
   arrLink = arrLink.slice(1,);
   console.log(arrLink)
@@ -106,13 +113,85 @@ useEffect(() => {
                     ))
         
                     .catch(error => console.log(error))  
-  }, [serverData, serverDataTopSongsLT, serverDataTopSongsMT, serverDataTopSongsST, loggedInQuery]);    
+  }, [serverDataTopSongsLT]);    
   console.log(tracksInfoLT); 
-  
-  //take in an array of IDs and return the image, track name, artist
+
+//MediumTERM DATA: track info
+useEffect(() => {
+  let arrLink = serverDataTopSongsMT.reduce((total, init) => (total + ","+ init) , "");
+  arrLink = arrLink.slice(1,);
+  console.log(arrLink)
+  fetch(`https://api.spotify.com/v1/audio-features?ids=${arrLink}`, 
+        {headers: {'Authorization': 'Bearer ' + loggedInQuery}
+        }).then((response) => response.json())
+         .then((data) => 
+         //console.log(data.audio_features))
+         setTracksInfoMT( ...tracksInfoLT,
+         (data.audio_features.map(item => (
+                     {
+                    id: item.id,
+                    acousticness: item.acousticness,
+                    danceability: item.danceability,
+                    energy: item.energy,
+                    instrumentalness: item.instrumentalness,
+                    liveness: item.liveness,
+                    loudness: item.loudness,
+                    speechiness: item.speechiness,
+                    valence: item.valence,
+                    tempo: item.tempo
+                     })
+                     ))
+                    ))
+        
+                    .catch(error => console.log(error))  
+  }, [serverDataTopSongsMT]);    
+  console.log(tracksInfoMT); 
+
+
+//ShortTERM DATA: track info
 useEffect(() => {
   
-    let arrLink = serverDataTopSongsLT.reduce((total, init) => (total + ","+ init) , "");
+  let arrLink = serverDataTopSongsST.reduce((total, init) => (total + ","+ init) , "");
+  arrLink = arrLink.slice(1,);
+  console.log(arrLink)
+  fetch(`https://api.spotify.com/v1/audio-features?ids=${arrLink}`, 
+        {headers: {'Authorization': 'Bearer ' + loggedInQuery}
+        }).then((response) => response.json())
+         .then((data) => 
+         //console.log(data.audio_features))
+         setTracksInfoST( ...tracksInfoLT,
+         (data.audio_features.map(item => (
+                     {
+                    id: item.id,
+                    acousticness: item.acousticness,
+                    danceability: item.danceability,
+                    energy: item.energy,
+                    instrumentalness: item.instrumentalness,
+                    liveness: item.liveness,
+                    loudness: item.loudness,
+                    speechiness: item.speechiness,
+                    valence: item.valence,
+                    tempo: item.tempo
+                     })
+                     ))
+                    ))
+        
+                    .catch(error => console.log(error))  
+  }, [serverDataTopSongsST]);    
+  console.log(tracksInfoST); 
+  
+
+
+
+
+
+
+
+
+
+useEffect(() => {
+  //take in an array of filtered IDs and return the image, track name, artist
+    let arrLink = filteredIDArr.reduce((total, init) => (total + ","+ init) , "");
     arrLink = arrLink.slice(1,);
     fetch(`https://api.spotify.com/v1/tracks?ids=${arrLink}`, 
         {headers: {'Authorization': 'Bearer ' + loggedInQuery}
@@ -133,8 +212,8 @@ useEffect(() => {
     
     
   
-}, [serverData, serverDataTopSongsLT, serverDataTopSongsMT, serverDataTopSongsST, loggedInQuery, tracksInfoLT]);    
-console.log(topSongsArr); 
+}, [filteredIDArr]);    
+//console.log(topSongsArr); 
 
 
     
