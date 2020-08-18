@@ -12,50 +12,22 @@ import queryString from "query-string";
 import { format } from "util";
 
 
-// let fakeServerData = {
-//   user: {
-//     name: "harry",
-//     topSongs: [
-//       {
-//         name: "Adore You",
-//         songArtist: "harry styles",
-//         month: "July",
-//         Mood: "High Energy"
-//       }
-//     ]
-//   }
-// };
-
 const FiltersDrop = (props) => {
   const [loggedInQuery, setLoggedInQuery] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   
-      let topSongsArr = [];
-      const [serverData, setServerData] = useState(
-        {
-          user: "",
-        });
-     const [serverDataTopSongsLT, setServerDataTopSongsLT] = useState([]);
-     const [serverDataTopSongsMT, setServerDataTopSongsMT] = useState([]);
-     const [serverDataTopSongsST, setServerDataTopSongsST] = useState([]);
+  const [serverData, setServerData] = useState(
+    {
+      user: "",
+    });
+
+  //states for ids
+  const [serverDataTopSongsLT, setServerDataTopSongsLT] = useState([]);
+  const [serverDataTopSongsMT, setServerDataTopSongsMT] = useState([]);
+  const [serverDataTopSongsST, setServerDataTopSongsST] = useState([]);
 
 
-     const [tracksInfoLT, setTracksInfoLT] = useState([
-       {
-       id: "",
-       name: "",
-       artist: "",
-       acousticness: 0.0,
-       danceability: 0.0,
-       energy: 0.0,
-       instrumentalness: 0.0,
-       liveness: 0.0,
-       loudness: 0.0,
-       speechiness: 0.0,
-       valence: 0.0,
-       tempo: 0.0
-      }
-    ]);
+  const [tracksInfoLT, setTracksInfoLT] = useState([]);
+  const [topSongsArr, setTopSongsArr] = useState([]);
 
 
   //LOG IN 
@@ -103,9 +75,6 @@ const FiltersDrop = (props) => {
 
 
 
-        console.log(serverDataTopSongsST)
-        console.log(serverDataTopSongsMT)
-        console.log(serverDataTopSongsLT)  
 
 
 
@@ -117,28 +86,55 @@ useEffect(() => {
   fetch(`https://api.spotify.com/v1/audio-features?ids=${arrLink}`, 
         {headers: {'Authorization': 'Bearer ' + loggedInQuery}
         }).then((response) => response.json())
-        .then((data) => ((data && data.audio_features && data.audio_features.map(item => (item.id && setTracksInfoLT(
-                    tracksInfoLT.push({
+         .then((data) => 
+         //console.log(data.audio_features))
+         setTracksInfoLT( ...tracksInfoLT,
+         (data.audio_features.map(item => (
+                     {
                     id: item.id,
-                    // acousticness: item.acousticness,
-                    // danceability: item.danceability,
-                    // energy: item.energy,
-                    // instrumentalness: item.instrumentalness,
-                    // liveness: item.liveness,
-                    // loudness: item.loudness,
-                    // speechiness: item.speechiness,
-                    // valence: item.valence,
-                    // tempo: item.tempo
-                    })))
-                   ))))
+                    acousticness: item.acousticness,
+                    danceability: item.danceability,
+                    energy: item.energy,
+                    instrumentalness: item.instrumentalness,
+                    liveness: item.liveness,
+                    loudness: item.loudness,
+                    speechiness: item.speechiness,
+                    valence: item.valence,
+                    tempo: item.tempo
+                     })
+                     ))
+                    ))
+        
+                    .catch(error => console.log(error))  
+  }, [serverData, serverDataTopSongsLT, serverDataTopSongsMT, serverDataTopSongsST, loggedInQuery]);    
+  console.log(tracksInfoLT); 
+  
+  //take in an array of IDs and return the image, track name, artist
+useEffect(() => {
+  
+    let arrLink = serverDataTopSongsLT.reduce((total, init) => (total + ","+ init) , "");
+    arrLink = arrLink.slice(1,);
+    fetch(`https://api.spotify.com/v1/tracks?ids=${arrLink}`, 
+        {headers: {'Authorization': 'Bearer ' + loggedInQuery}
+        }).then((response) => response.json())
+         .then((data) => 
+        //console.log(data.tracks))
+         setTopSongsArr(
+         (data.tracks.map(item => (
+                     {
+                    name: item.name,
+                    artist: item.album.artists[0].name,
+                    photo: item.album.images[2].url,
+                     })
+                     ))
+                    ))
+        
                     .catch(error => console.log(error))
-
     
-     
     
-  }, [serverData, serverDataTopSongsLT, serverDataTopSongsMT, serverDataTopSongsST, loggedInQuery ]);    
-  console.log(tracksInfoLT);    
-
+  
+}, [serverData, serverDataTopSongsLT, serverDataTopSongsMT, serverDataTopSongsST, loggedInQuery, tracksInfoLT]);    
+console.log(topSongsArr); 
 
 
     
@@ -160,13 +156,13 @@ useEffect(() => {
     setOpenView(!dropdownOpenView);
   };
 
-  useEffect(() => {
-    setFilteredStuff(
-      topSongsArr
-        //.filter((e) => e.Mood === Mood)
-        .slice(0, viewNum)
-    );
-  }, [Mood, viewNum]);
+  // useEffect(() => {
+  //   setFilteredStuff(
+  //     topSongsArr
+  //       //.filter((e) => e.Mood === Mood)
+  //       .slice(0, viewNum)
+  //   );
+  // }, [Mood, viewNum]);
 
   function clickedHighEnergy() {
     setMood("High Energy");
