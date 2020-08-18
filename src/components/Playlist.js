@@ -13,7 +13,7 @@ class Playlist extends Component {
         <Container>
           <Row>
             <Col>
-              <img src={this.props.photo} align alt={this.props.photoAlt} />
+              <img src={this.props.photo} alt={this.props.photoAlt} />
             </Col>
             <Col>
               <Row>
