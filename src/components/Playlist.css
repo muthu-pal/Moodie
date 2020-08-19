@@ -1,21 +1,41 @@
-/* .container{
+
+.comp{
+    grid-column: small-margin-start / small-margin-end;
+    margin:20px 0px;
+
+    min-height: 110px;
+
     display: grid;
+    grid-template-columns: 70px auto;
+    grid-template-rows: 30px auto;
+    grid-template-rows: 4ch auto minmax(10px, 30px);
+    place-self: center;
     
-} */
-.photo{
-    align-content: right;
-    text-align: end;
-    
+
 }
+.photo{
+    align-content: left;
+    text-align: end;
+    /* grid-column-end: 1; */
+    
+}   
+    
+
 .artist{
     grid-column-start: 2;
-    text-align: start;
-    text-anchor: start;
+    text-align: left;
+    font-size: 15px;
+    grid-row-start: 2;
+    
     
 }
 
 .track{
     grid-column-start: 2;
-    text-align: start;
+    text-align: left;
+    grid-row-end: 2;
+    text-overflow: ellipsis;
     
 } 
+
+
