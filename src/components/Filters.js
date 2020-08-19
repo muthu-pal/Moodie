@@ -39,7 +39,7 @@ const FiltersDrop = (props) => {
   const [topSongsArr, setTopSongsArr] = useState([]);
 
   const [dropdownOpenMood, setOpenMood] = useState(false);
-  const [Mood, setMood] = useState("High Energy");
+  const [Mood, setMood] = useState("Happy");
 
   const [dropdownOpenView, setOpenView] = useState(false);
   const [viewNum, setView] = useState("All Time");
@@ -239,68 +239,45 @@ function select_tracks(track) {
 
   let moodFiltered = "none"
   if (
-    danceability !== "high" 
-    //&&
-    // energy === "low" &&
-    // valence === "medium" &&
-    // tempo > 66.66 &&
-    // tempo <= 133.33 
+    energy === "low" &&
+    tempo <= 133.33 
   ){
-    //console.log("chill")
     moodFiltered = "Chill";
    } 
-  //else if (valence === "medium" 
-  //   && acousticness === "high") {
-  //   return "Acoustic";
-  // } else if (
-  //   danceability === "high" &&
-  //   energy === "high" &&
-  //   valence === "high" &&
-  //   tempo > 66.66 &&
-  //   tempo <= 133.33
-  // ) {
-  //   return "Happy";
-  // } else if (
-  //   danceability === "low" &&
-  //   energy === "low" &&
-  //   valence === "low" &&
-  //   tempo <= 66.66 &&
-  //   acousticness === "medium"
-  // ) {
-  //   return "Sad";
-  // } else if (
-  //   danceability === "low" &&
-  //   energy === "medium" &&
-  //   tempo <= 66.66 &&
-  //   acousticness === "high"
-  // ) {
-  //   return "Studying";
-  // } else if (danceability === "high" 
-  //     && energy === "high" 
-  //     && tempo > 133.33) {
-  //     return "Party";
-  // }
-  // console.log(moodFiltered)
-  // console.log(Mood)
-  // console.log(moodFiltered === Mood)
-  return (moodFiltered === Mood)
+  else if (acousticness === "high") {
+    return "Acoustic";
+  } else if (
+    energy === "high" &&
+    valence === "high"
+  ) {
+    return "Happy";
+  } else if (
+    danceability !== "high" &&
+    tempo < 85
+  ) {
+    return "Sad";
+  } else if (danceability === "high" 
+      && energy === "high") {
+      return "Party";
+  }
+  return (moodFiltered)
 }
 
 //set filtered array based on mood chosen
  useEffect(() => {
   if (viewNum === "All Time"){
     setFilteredIDArr(
-      tracksInfoLT.filter((e) => select_tracks(e)).map(e => e.id)
+      tracksInfoLT.filter((e) => select_tracks(e)===Mood).map(e => e.id)
     );
   }
   else if (viewNum === "6 Months"){
     setFilteredIDArr(
-      tracksInfoMT.filter((e) => select_tracks(e)).map(e => e.id)
+      tracksInfoMT.filter((e) => select_tracks(e)===Mood).map(e => e.id)
     );
   }
   else{
     setFilteredIDArr(
-      tracksInfoST.filter((e) => select_tracks(e)).map(e => e.id)
+      tracksInfoST.filter((e) => select_tracks(e)===Mood).map(e => e.id)
     );
   }
    }, [Mood, viewNum]);
@@ -323,14 +300,7 @@ function select_tracks(track) {
 
 
   //set mood state based on what is clicked
-  function clickedHighEnergy() {
-    setMood("High Energy");
-    
-  }
-  function clickedDanceable() {
-    setMood("Danceable");
-    
-  }
+  
   function clickedAcoustic() {
     setMood("Acoustic");
     
@@ -345,10 +315,6 @@ function select_tracks(track) {
   }
   function clickedSad() {
     setMood("Sad");
-    
-  }
-  function clickedStudying() {
-    setMood("Studying");
     
   }
   function clickedParty() {
@@ -393,13 +359,10 @@ function select_tracks(track) {
                                             Mood: {Mood}
                                           </DropdownToggle>
                                           <DropdownMenu>
-                                            <DropdownItem onClick={clickedHighEnergy}>High Energy</DropdownItem>
-                                            <DropdownItem onClick={clickedDanceable}>Danceable</DropdownItem>
                                             <DropdownItem onClick={clickedAcoustic}>Acoustic</DropdownItem>
                                             <DropdownItem onClick={clickedChill}>Chill</DropdownItem>
                                             <DropdownItem onClick={clickedHappy}>Happy</DropdownItem>
                                             <DropdownItem onClick={clickedSad}>Sad</DropdownItem>
-                                            <DropdownItem onClick={clickedStudying}>Study</DropdownItem>
                                             <DropdownItem onClick={clickedParty}>Party</DropdownItem>
                                           </DropdownMenu>
                                         </ButtonDropdown>
