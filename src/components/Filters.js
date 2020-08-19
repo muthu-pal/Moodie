@@ -255,11 +255,9 @@ function select_tracks(track) {
   ) {
     return "Happy";
   } else if (
-    danceability !== "high" &&
-    valence === "low" &&
-    tempo < 70
+    energy === "low"
   ) {
-    return "Sad";
+    return "Feelz";
   } else if (
     danceability !== "low" &&
     tempo > 100 &&
@@ -321,7 +319,7 @@ function select_tracks(track) {
     
   }
   function clickedSad() {
-    setMood("Sad");
+    setMood("Feelz");
     
   }
   function clickedParty() {
@@ -381,7 +379,7 @@ function select_tracks(track) {
                   <DropdownItem onClick={clickedAcoustic}>Acoustic <Emoji text=":guitar:"/></DropdownItem>
                   <DropdownItem onClick={clickedChill}>Chill <Emoji text=":sun_behind_cloud:"/></DropdownItem>
                   <DropdownItem onClick={clickedHappy}>Happy <Emoji text=":upside_down:"/></DropdownItem>
-                  <DropdownItem onClick={clickedSad}>Sad <Emoji text=":disappointed_face:"/></DropdownItem>
+                  <DropdownItem onClick={clickedSad}>Feelz <Emoji text=":disappointed_face:"/></DropdownItem>
                   <DropdownItem onClick={clickedParty}>Party <Emoji text=":dancer:"/></DropdownItem>
                 </DropdownMenu>
               </ButtonDropdown>
