@@ -9,7 +9,7 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import Playlist from "./Playlist.js";
 import queryString from "query-string";
-import { format } from "util";
+
 
 
 const FiltersDrop = (props) => {
@@ -39,7 +39,7 @@ const FiltersDrop = (props) => {
   const [topSongsArr, setTopSongsArr] = useState([]);
 
   const [dropdownOpenMood, setOpenMood] = useState(false);
-  const [Mood, setMood] = useState("Happy");
+  const [Mood, setMood] = useState("");
 
   const [dropdownOpenView, setOpenView] = useState(false);
   const [viewNum, setView] = useState("All Time");
@@ -343,85 +343,107 @@ function select_tracks(track) {
     
   }
 
+  function checkTime(timeFrame){
+    if (timeFrame === "30 Days"){
+      return "ST";
+    }
+    if (timeFrame === "6 Months"){
+      return "MT";
+    }
+    else {
+      return "LT";
+    }
+  }
+
   return (
     <div>
       {(loggedInQuery !== "") ?
-                                <div>
-                                      <div>
-                                        <ButtonDropdown
-                                          isOpen={dropdownOpenMood}
-                                          toggle={toggleMood}
-                                          className="Mood--Btn"
-                                        >
-                                          <DropdownToggle
-                                            caret
-                                            style={{
-                                              backgroundColor: "#1DB954",
-                                              borderColor: "white",
-                                              color: "white",
-                                              borderRadius: "20px"
-                                            }}
-                                          >
-                                            Mood: {Mood}
-                                          </DropdownToggle>
-                                          <DropdownMenu>
-                                            <DropdownItem onClick={clickedAcoustic}>Acoustic</DropdownItem>
-                                            <DropdownItem onClick={clickedChill}>Chill</DropdownItem>
-                                            <DropdownItem onClick={clickedHappy}>Happy</DropdownItem>
-                                            <DropdownItem onClick={clickedSad}>Sad</DropdownItem>
-                                            <DropdownItem onClick={clickedParty}>Party</DropdownItem>
-                                          </DropdownMenu>
-                                        </ButtonDropdown>
+      <div>
+            <div style={{textAlign: "center"}}>
+              <ButtonDropdown
+                isOpen={dropdownOpenMood}
+                toggle={toggleMood}
+                className="Mood--Btn"
+              >
+                <DropdownToggle
+                  caret
+                  style={{
+                    backgroundColor: "#1DB954",
+                    borderColor: "white",
+                    color: "white",
+                    borderRadius: "20px"
+                  }}
+                >
+                  Mood: {Mood}
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem onClick={clickedAcoustic}>Acoustic</DropdownItem>
+                  <DropdownItem onClick={clickedChill}>Chill</DropdownItem>
+                  <DropdownItem onClick={clickedHappy}>Happy</DropdownItem>
+                  <DropdownItem onClick={clickedSad}>Sad</DropdownItem>
+                  <DropdownItem onClick={clickedParty}>Party</DropdownItem>
+                </DropdownMenu>
+              </ButtonDropdown>
 
-                                        <ButtonDropdown
-                                          isOpen={dropdownOpenView}
-                                          toggle={toggleV}
-                                          className="view--Btn"
-                                        >
-                                          <DropdownToggle
-                                            caret
-                                            style={{
-                                              backgroundColor: "transparent",
-                                              borderColor: "white",
-                                              color: "white",
-                                              borderRadius: "20px"
-                                            }}
-                                          >
-                                            View: {viewNum}
-                                          </DropdownToggle>
-                                          <DropdownMenu>
-                                            <DropdownItem onClick={clickedLT}>All Time</DropdownItem>
-                                            <DropdownItem onClick={clickedMT}>6 Months</DropdownItem>
-                                            <DropdownItem onClick={clickedST}>30 Days</DropdownItem>
-                                          </DropdownMenu>
-                                        </ButtonDropdown>
-                                    
-                                      <br />
-                                      <br />
-                                      {(topSongsArr.length !== 0) ? 
-                                    <div >
-                                      {topSongsArr.map((element) => {
-                                        return (
-                                          <div key= {element.index}>
-                                            <Playlist
-                                              name={element.name}
-                                              artist={element.artist}
-                                              photo={element.photo}
-                                              photoAlt="Album Cover"
-                                            />
-                                          </div>
-                                        );
-                                      })}
-                                      </div>
-                                      : <h3>there are no songs that match :(</h3>
-                                      }
-                                      </div>
-                                      </div>
+              <ButtonDropdown
+                isOpen={dropdownOpenView}
+                toggle={toggleV}
+                className="view--Btn"
+              >
+                <DropdownToggle
+                  caret
+                  style={{
+                    backgroundColor: "transparent",
+                    borderColor: "white",
+                    color: "white",
+                    borderRadius: "20px"
+                  }}
+                >
+                  View: {viewNum}
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem onClick={clickedLT}>All Time</DropdownItem>
+                  <DropdownItem onClick={clickedMT}>6 Months</DropdownItem>
+                  <DropdownItem onClick={clickedST}>30 Days</DropdownItem>
+                </DropdownMenu>
+              </ButtonDropdown>
+          
+              <br />
+              <br />
+              
+              {(Mood !== "") ?
+
+                  <div>
+                      {(topSongsArr.length !== 0) ? 
+                          <div >
+                              {topSongsArr.map((element) => {
+                                return (
+                                  <div key= {element.name}>
+                                    <Playlist
+                                      name={element.name}
+                                      artist={element.artist}
+                                      photo={element.photo}
+                                      photoAlt="Album Cover"
+                                    />
+                                  </div>
+                                );
+                              })}
+                          </div>
+                      : <h3 style={{textAlign: "center"}}>there are no songs that match :(</h3>
+                      }
+                      </div>
+                  : <h3 style={{textAlign: "center"}}>Pick a mood!</h3>
+                  }
+              </div>
+            </div>
       
       
 
       : 
-      (<div><h1>please sign in <Button onClick={logIn}>here</Button></h1></div>)}
+      (<div  style={{textAlign: "center"}}>
+        <h1>Please Sign In <Button onClick={logIn}>Here</Button></h1>
+        <p>With Moodie, you can pick a mood and discover your top tracks that fit that vibe!</p>
+      </div>)}
       
 
     </div>

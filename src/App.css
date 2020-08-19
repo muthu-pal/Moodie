@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Patua+One&display=swap');
 
 .App {
   background: black;
@@ -15,8 +16,12 @@ img {
 
 .Title {
   /* font-family: "Roboto", sans-serif; */
-  font-family: "Inter", sans-serif;
+  font-family: 'Patua One', cursive;
+  font-size: 65px;
   font-weight: 1000px;
   text-align: left;
-  color: white;
+  color: #1bb954;
+  position: absolute;
+  top: 15px;
+  left: 25px;
 }
