@@ -219,10 +219,8 @@ useEffect(() => {
 //FUNCTIONS TO FILTER MOODS
 //classify audio features
 function returnRange(val) {
-  if (val > 0 && val <= 0.33) {
+  if (val > 0 && val <= 0.50) {
     return "low";
-  } else if (val > 0.33 && val <= 0.66) {
-    return "medium";
   } else {
     return "high";
   }
@@ -240,24 +238,32 @@ function select_tracks(track) {
   let moodFiltered = "none"
   if (
     energy === "low" &&
-    tempo <= 133.33 
+    acousticness === "high" &&
+    tempo < 100 
   ){
     moodFiltered = "Chill";
    } 
-  else if (acousticness === "high") {
+  else if (
+    acousticness === "high" 
+  ) {
     return "Acoustic";
   } else if (
     energy === "high" &&
-    valence === "high"
+    valence !== "low" &&
+    danceability !== "low"
   ) {
     return "Happy";
   } else if (
     danceability !== "high" &&
-    tempo < 85
+    valence === "low" &&
+    tempo < 70
   ) {
     return "Sad";
-  } else if (danceability === "high" 
-      && energy === "high") {
+  } else if (
+    danceability !== "low" &&
+    tempo > 100 &&
+    energy !== "low"
+  ) {
       return "Party";
   }
   return (moodFiltered)
