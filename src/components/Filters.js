@@ -9,6 +9,7 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import Playlist from "./Playlist.js";
 import queryString from "query-string";
+import Emoji from "react-emoji-render";
 
 
 
@@ -377,11 +378,11 @@ function select_tracks(track) {
                   Mood: {Mood}
                 </DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem onClick={clickedAcoustic}>Acoustic</DropdownItem>
-                  <DropdownItem onClick={clickedChill}>Chill</DropdownItem>
-                  <DropdownItem onClick={clickedHappy}>Happy</DropdownItem>
-                  <DropdownItem onClick={clickedSad}>Sad</DropdownItem>
-                  <DropdownItem onClick={clickedParty}>Party</DropdownItem>
+                  <DropdownItem onClick={clickedAcoustic}>Acoustic <Emoji text=":guitar:"/></DropdownItem>
+                  <DropdownItem onClick={clickedChill}>Chill <Emoji text=":sun_behind_cloud:"/></DropdownItem>
+                  <DropdownItem onClick={clickedHappy}>Happy <Emoji text=":upside_down:"/></DropdownItem>
+                  <DropdownItem onClick={clickedSad}>Sad <Emoji text=":disappointed_face:"/></DropdownItem>
+                  <DropdownItem onClick={clickedParty}>Party <Emoji text=":dancer:"/></DropdownItem>
                 </DropdownMenu>
               </ButtonDropdown>
 
@@ -402,9 +403,9 @@ function select_tracks(track) {
                   View: {viewNum}
                 </DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem onClick={clickedLT}>All Time</DropdownItem>
-                  <DropdownItem onClick={clickedMT}>6 Months</DropdownItem>
-                  <DropdownItem onClick={clickedST}>30 Days</DropdownItem>
+                  <DropdownItem onClick={clickedLT}>All Time <Emoji text=":hourglass_not_done:"/></DropdownItem>
+                  <DropdownItem onClick={clickedMT}>6 Months <Emoji text=":calendar:"/></DropdownItem>
+                  <DropdownItem onClick={clickedST}>30 Days <Emoji text=":clock1:"/></DropdownItem>
                 </DropdownMenu>
               </ButtonDropdown>
           
