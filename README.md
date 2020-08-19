@@ -1,6 +1,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ### `Moodie`
+Visit https://clockwise-s20.herokuapp.com/ to start! Moodie will instruct you to login and redirect you to http://clockwisebackend.herokuapp.com/login and then take you back to the main site when the profile has been authenticated by Spotify! 
+
 Moodie was created using React.js and the Spotify API. We pull your top 50 tracks from your listening history and analyze the various audio features that Spotify provides each track. 
 
 ### `How it works:`
@@ -16,7 +18,8 @@ Users can also view all 50 of their top tracks at once by setting the mood to "A
 
 
 
---- from create-react-app ---
+
+
 
 ### `npm start`
 
