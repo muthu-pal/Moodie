@@ -442,7 +442,12 @@ function select_tracks(track) {
 
       : 
       (<div  style={{textAlign: "center"}}>
-        <h1>Please Sign In <Button onClick={logIn}>Here</Button></h1>
+        <h1>Click <Button onClick={logIn}>here</Button> to start if you've signed in!</h1>
+          <h2>If you haven't signed in, click <Button onClick={(e) => {
+                                                  e.preventDefault();
+                                                  window.location.href='http://clockwisebackend.herokuapp.com/login';
+                                                  }}>this</Button>
+          </h2>
         <p>With Moodie, you can pick a mood and discover your top tracks that fit that vibe!</p>
       </div>)}
       
