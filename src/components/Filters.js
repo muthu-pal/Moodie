@@ -393,17 +393,17 @@ function select_tracks(track) {
                                       <br />
                                       <br />
                                       {(topSongsArr.length !== 0) ? 
-                                    <div>
+                                    <div >
                                       {topSongsArr.map((element) => {
                                         return (
-                                          <>
+                                          <div key= {element.index}>
                                             <Playlist
                                               name={element.name}
                                               artist={element.artist}
                                               photo={element.photo}
                                               photoAlt="Album Cover"
                                             />
-                                          </>
+                                          </div>
                                         );
                                       })}
                                       </div>
