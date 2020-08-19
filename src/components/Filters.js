@@ -236,13 +236,13 @@ function select_tracks(track) {
   let valence = returnRange(track.valence);
   let tempo = track.tempo;
 
-  let moodFiltered = "none"
+  
   if (
     energy === "low" &&
     acousticness === "high" &&
     tempo < 100 
   ){
-    moodFiltered = "Chill";
+    return "Chill";
    } 
   else if (
     acousticness === "high" 
@@ -265,24 +265,27 @@ function select_tracks(track) {
   ) {
       return "Party";
   }
-  return (moodFiltered)
+  else {
+      return "none";
+  }
+  
 }
 
 //set filtered array based on mood chosen
  useEffect(() => {
   if (viewNum === "All Time"){
     setFilteredIDArr(
-      tracksInfoLT.filter((e) => select_tracks(e)===Mood).map(e => e.id)
+      tracksInfoLT.filter((e) => (Mood === "All Songs") ? e : (select_tracks(e)===Mood)).map(e => e.id)
     );
   }
   else if (viewNum === "6 Months"){
     setFilteredIDArr(
-      tracksInfoMT.filter((e) => select_tracks(e)===Mood).map(e => e.id)
+      tracksInfoMT.filter((e) => (Mood === "All Songs") ? e : select_tracks(e)===Mood).map(e => e.id)
     );
   }
   else{
     setFilteredIDArr(
-      tracksInfoST.filter((e) => select_tracks(e)===Mood).map(e => e.id)
+      tracksInfoST.filter((e) => (Mood === "All Songs") ? e : select_tracks(e)===Mood).map(e => e.id)
     );
   }
    }, [Mood, viewNum]);
@@ -324,6 +327,10 @@ function select_tracks(track) {
   }
   function clickedParty() {
     setMood("Party");
+    
+  }
+  function clickedAll() {
+    setMood("All Songs");
     
   }
 
@@ -381,6 +388,7 @@ function select_tracks(track) {
                   <DropdownItem onClick={clickedHappy}>Happy <Emoji text=":upside_down:"/></DropdownItem>
                   <DropdownItem onClick={clickedSad}>Feelz <Emoji text=":disappointed_face:"/></DropdownItem>
                   <DropdownItem onClick={clickedParty}>Party <Emoji text=":dancer:"/></DropdownItem>
+                  <DropdownItem onClick={clickedAll}>All Songs <Emoji text=":musical_notes:"/></DropdownItem>
                 </DropdownMenu>
               </ButtonDropdown>
 
