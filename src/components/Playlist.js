@@ -10,17 +10,17 @@ class Playlist extends Component {
   render() {
     return (
       <div style={{ color: "white" }}>
-        <Container>
+        <Container className="container">
           <Row>
             <Col>
-              <img src={this.props.photo} alt={this.props.photoAlt} />
+              <img src={this.props.photo} alt={this.props.photoAlt} className="photo"/>
             </Col>
             <Col>
-              <Row>
-                <h3 style={{ textAlign: "left" }}>{this.props.name}</h3>
+              <Row> 
+                <h3 className="track">{this.props.name}</h3>
               </Row>
               <Row>
-                <ul style={{ textAlign: "left" }}>{this.props.artist}</ul>
+                <ul className="artist">{this.props.artist}</ul>
               </Row>
             </Col>
           </Row>

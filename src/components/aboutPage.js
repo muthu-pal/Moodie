@@ -1,6 +1,5 @@
 import React from "react";
 import { Component } from "react";
-import './aboutPage.css';
 import Emoji from "react-emoji-render";
 //<Emoji text=":emoji:" />
 

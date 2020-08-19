@@ -1,0 +1,21 @@
+/* .container{
+    display: grid;
+    
+} */
+.photo{
+    align-content: right;
+    text-align: end;
+    
+}
+.artist{
+    grid-column-start: 2;
+    text-align: start;
+    text-anchor: start;
+    
+}
+
+.track{
+    grid-column-start: 2;
+    text-align: start;
+    
+} 
