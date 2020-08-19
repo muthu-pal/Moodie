@@ -1,8 +1,25 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+### `Moodie`
+Visit https://clockwise-s20.herokuapp.com/ to start! Moodie will instruct you to login and redirect you to http://clockwisebackend.herokuapp.com/login and then take you back to the main site when the profile has been authenticated by Spotify! 
 
-In the project directory, you can run:
+Moodie was created using React.js and the Spotify API. We pull your top 50 tracks from your listening history and analyze the various audio features that Spotify provides each track. 
+
+### `How it works:`
+Songs have attributes like danceability, acousticness, energy, valence, and tempo assigned to them by the Spotify API. Our site filters the songs based on a mood that is correlated with certain attributes. 
+For example, "Watermelon Sugar" by Harry Styles has a danceability of 0.548, an energy of 0.816, and valence of 0.557. All of these values are on the "higher" side, so high danceability, energy, and valence all work together to categorize the song as "Happy". 
+
+Happy songs tend to be more danceable and have higher energy and valence. Chill songs on the other hand may have more acousticness and a slower tempo. 
+
+Users can also view all 50 of their top tracks at once by setting the mood to "All Songs"
+
+
+
+
+
+
+
+
 
 ### `npm start`
 
@@ -12,57 +29,4 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
