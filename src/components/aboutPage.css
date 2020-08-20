@@ -1,15 +1,51 @@
-@media screen and (max-width: 759px) {
-    .about {
-      font-size: 1.1rem;
-    }
-  
-  }
-  
-  
-  /* anything less than 420px */
-  @media screen and (max-width: 419px) {
-    .about {
-      font-size: 1rem;
-    }
-  
-  }
+.about{
+    color: "white";
+    /* bottom: "5px";
+    width: "60%"; */
+    text-align: "center";
+    justify-items: center;
+    display: grid;
+    grid-template-columns: auto 50% auto;
+    
+}
+.aboutTitle{
+    text-align: "center";
+    margin-left:"auto";
+    margin-right:"auto";
+    grid-column-start: 2;
+}
+#moodieTop{
+    font-size: "30px";
+    width: "50%"; 
+    text-align: "center";
+    margin-left:"auto";
+    margin-right:"auto";
+    grid-column-start: 2;
+    justify-items: center;
+}
+.moodieMid{
+    font-size: "14px";
+    width: "40%";
+    text-align: "center";
+    margin-left:"auto";
+    margin-right:"auto";
+    grid-column-start: 2;
+    justify-items: center;
+}
+.moodieExample{
+    font-size: "18px";
+    margin-left:"auto";
+    margin-right:"auto";
+    grid-column-start: 2;
+    justify-items: center;
+}
+.moodieLinks{
+    font-size: "12px";
+    margin-left:"auto";
+    margin-right:"auto";
+    justify-items: center;
+    grid-column-start: 2;
+}
+
+
+

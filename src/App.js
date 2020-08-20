@@ -27,7 +27,7 @@ export default function App() {
         <br />
         <br />
         <br />
-        <About className = "about"/>
+        <About />
       
     </div>
   );

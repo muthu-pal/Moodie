@@ -9,6 +9,7 @@
 }
 body {
   background-color: black;
+  color: white;
 }
 img {
   height: 62px;
@@ -25,5 +26,22 @@ img {
   position: absolute;
   top: 15px;
   left: 25px;
+}
+@media only screen and (max-width: 480px) {
+
+  body{ 
+    font-size: calc(12px + 1vw)
+  }
+  h1 {
+    font-size: 4.9vw;
+  }
+  h2 {
+    font-size: 3.0vh;
+  }
+  p {
+    font-size: 2vmin;
+  }
+  
+
 }
 

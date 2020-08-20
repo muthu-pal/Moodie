@@ -10,6 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Playlist from "./Playlist.js";
 import queryString from "query-string";
 import Emoji from "react-emoji-render";
+import "./Filters.css"
 
 
 
@@ -362,7 +363,7 @@ function select_tracks(track) {
   }
 
   return (
-    <div>
+    <div className="filters">
       {(loggedInQuery !== "") ?
       <div>
             <div style={{textAlign: "center"}}>
