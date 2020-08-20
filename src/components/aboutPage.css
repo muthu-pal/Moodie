@@ -1,0 +1,15 @@
+@media screen and (max-width: 759px) {
+    .about {
+      font-size: 1.1rem;
+    }
+  
+  }
+  
+  
+  /* anything less than 420px */
+  @media screen and (max-width: 419px) {
+    .about {
+      font-size: 1rem;
+    }
+  
+  }

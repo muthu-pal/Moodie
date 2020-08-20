@@ -5,6 +5,7 @@
 .App {
   background: black;
   font-family: "Inter", sans-serif;
+  width: 100%;
 }
 body {
   background-color: black;

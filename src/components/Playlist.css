@@ -6,7 +6,7 @@
     min-height: 110px;
 
     display: grid;
-    grid-template-columns: 70px auto;
+    grid-template-columns: 80px auto;
     grid-template-rows: 30px auto;
     grid-template-rows: 4ch auto minmax(10px, 30px);
     place-self: center;
