@@ -25,7 +25,7 @@ class About extends Component {
           <br/>
           <p className="moodieLinks" >made with <Emoji text=":heart:" /> by 
                 <a style={{color:"#92D3FF"}} href="https://www.linkedin.com/in/muthu-p/" target = "_blank" rel = "noopener noreferrer"> Muthu </a>
-                and 
+                and designed by
                 <a style={{color:"#92D3FF"}} href="https://www.linkedin.com/in/raveena-rao/" target = "_blank" rel = "noopener noreferrer"> Raveena </a>
           </p>
         </div>
