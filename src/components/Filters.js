@@ -451,7 +451,7 @@ function select_tracks(track) {
       (<div  style={{textAlign: "center"}}>
           <h1>If you haven't signed in, click <Button onClick={(e) => {
                                                   e.preventDefault();
-                                                  window.location.href='http://clockwisebackend.herokuapp.com/login';
+                                                  window.location.href='http://moodie-backend.herokuapp.com/login';
                                                   }}>this</Button>
           </h1>
           <h2>Click <Button onClick={logIn}>here</Button> to start if you've signed in!</h2>
